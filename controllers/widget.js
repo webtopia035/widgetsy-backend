@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const mongoose = require("mongoose");
 
-const HttpError = require("../models/http-error");
+const HttpError = require("../errors/HttpError");
 const Widget = require("../models/widget");
 const User = require("../models/user");
 const widget = require("../models/widget");
