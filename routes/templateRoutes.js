@@ -1,5 +1,5 @@
 const express = require("express");
-const widgetController = require("../controller/widget-controller");
+const widgetController = require("../controllers/widget");
 const router = express.Router();
 
 router.get("/:wid", widgetController.getWidgetById);
