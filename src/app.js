@@ -1,13 +1,17 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const templateRoute = require("../routes/template-route");
-const usersRoute = require("../routes/users-route");
-const HttpError = require("../models/http-error");
+const templateRoute = require("../routes/templateRoutes");
+const usersRoute = require("../routes/userRoutes");
+const HttpError = require("../errors/HttpError");
+const BadRequest = require("../errors/BadRequest");
 
 const app = express();
+
+const connectDB = require("../db/connect");
 
 app.use(cors());
 
@@ -31,13 +35,14 @@ app.use((error, req, res, next) => {
 
 const PORT = process.env.PORT || 8000;
 
-mongoose
-  .connect(
-    "mongodb+srv://ErrorMakerzz:ErrorMakerzz@cluster0.ztye4c7.mongodb.net/?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    app.listen(PORT, console.log(`Server started on port ${PORT}`));
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(PORT, () =>
+      console.log(`Server is listening on port: ${PORT}...`)
+    );
+  } catch (error) {
+    throw new BadRequest("Cannot Connect to db");
+  }
+};
+start();
