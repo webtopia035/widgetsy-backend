@@ -27,7 +27,7 @@ const signup = async (req, res, next) => {
     );
   }
 
-  const { name, email, password, widget } = req.body;
+  const { name, email, password } = req.body;
 
   let existingUser;
   try {
@@ -108,6 +108,4 @@ const login = async (req, res, next) => {
     });
 };
 
-exports.getUser = getUser;
-exports.signup = signup;
-exports.login = login;
+module.exports = { getUser, signup, login };
